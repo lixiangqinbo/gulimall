@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lxsx.gulimall.product.dao.AttrAttrgroupRelationDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.lxsx.gulimall.product.entity.AttrAttrgroupRelationEntity" id="attrAttrgroupRelationMap">
+        <result property="id" column="id"/>
+        <result property="attrId" column="attr_id"/>
+        <result property="attrGroupId" column="attr_group_id"/>
+        <result property="attrSort" column="attr_sort"/>
+    </resultMap>
+    <update id="updateByAttrId">
+        UPDATE `pms_attr_attrgroup_relation`
+        SET `attr_group_id` =#{attrGroupId}
+        WHERE `attr_id` =#{attrId}
+    </update>
+
+
+    <delete id="deleteBatchByAttrId">
+        DELETE FROM `pms_attr_attrgroup_relation`
+        WHERE `attr_id` IN
+        <foreach item="attrId" index="index" collection="asList" open="(" separator="," close=")">
+            #{attrId}
+        </foreach>
+    </delete>
+    <delete id="deleteByAttrIdsAndGroupIds">
+        DELETE FROM `pms_attr_attrgroup_relation`
+        WHERE
+        <foreach collection="arList" item="item"  separator="OR" >
+            (`attr_id` = #{item.attrId} AND `attr_group_id` = #{item.attrGroupId})
+        </foreach>
+
+    </delete>
+
+    <select id="selectByAttrId" resultMap="attrAttrgroupRelationMap">
+        SELECT * FROM `pms_attr_attrgroup_relation` WHERE `attr_id` =#{attrId}
+    </select>
+    <select id="selectByAttrGroupId" resultMap="attrAttrgroupRelationMap">
+        SELECT * FROM `pms_attr_attrgroup_relation` WHERE `attr_group_id` = #{attrgroupId}
+    </select>
+
+
+</mapper>

@@ -1,0 +1,32 @@
+#server:
+#  port: 8080
+#spring:
+#  profiles:
+#    active: dev  #默认的获取配置文件后缀
+#
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://47.96.187.214:3306/gulimall_sms?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+#    username: root
+#    password: qwe123
+#    #Nacos注册中心
+#  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: 162.14.77.50:8848
+#
+#mybatis-plus:
+#  type-aliases-package: com.lxsx.gulimall.product.entity
+#  mapper-locations: classpath:mapper/**/*.xml
+#  # 配置日志
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#  global-config:
+#    db-config:
+#      id-type: auto
+#
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: '*'

@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: aliyun-third-api
+  cloud:
+    nacos:
+      config:
+        server-addr: 162.14.77.50:8848
+        namespace: 99c6b5f6-9f5e-44ba-8ba4-c1e745caeff2
+        ext-config[0]:
+          group: DEFAULT_GROUP
+          data-id: oss.yml
+          refresh: true
+
+

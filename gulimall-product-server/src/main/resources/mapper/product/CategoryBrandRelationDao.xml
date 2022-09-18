@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lxsx.gulimall.product.dao.CategoryBrandRelationDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.lxsx.gulimall.product.entity.CategoryBrandRelationEntity" id="categoryBrandRelationMap">
+        <result property="id" column="id"/>
+        <result property="brandId" column="brand_id"/>
+        <result property="catelogId" column="catelog_id"/>
+        <result property="brandName" column="brand_name"/>
+        <result property="catelogName" column="catelog_name"/>
+    </resultMap>
+    <update id="updateBrandRelation">
+        UPDATE `pms_category_brand_relation` SET
+        <if test="brandName!=null and brandName !=''">`brand_name` = #{brandName} WHERE `brand_id` = #{brandId}</if>
+        <if test="catelogName!=null and catelogName !=''">`catelog_name` = #{catelogName} WHERE `catelog_id` = #{catelogId}</if>
+    </update>
+
+    <select id="getCatalogList" resultMap="categoryBrandRelationMap">
+
+        SELECT `catelog_id`,`catelog_name` FROM `pms_category_brand_relation`
+        WHERE  `brand_id` = #{brandId}
+
+    </select>
+
+
+</mapper>

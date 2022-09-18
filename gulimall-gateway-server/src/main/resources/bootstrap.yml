@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: gulimall-gateway-server
+  cloud:
+    nacos:
+      config:
+        server-addr: 162.14.77.50:8848
+        namespace: cbeb50ff-6861-4a37-bd13-da3db3e6e7a2
+        ext-config[0]:
+          data-id: nacos.yaml
+          group: COMMON_GROUP
+          refresh : true
+        ext-config[1]:
+          data-id: other.yaml
+          group: GATEWAY_GROUP
+          refresh : true
+        ext-config[2]:
+          data-id: gateway.yaml
+          group: GATEWAY_GROUP
+          refresh: true

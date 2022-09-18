@@ -1,0 +1,15 @@
+server:
+  port: 9001
+spring:
+  application:
+    name: aliyun-third-api
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 162.14.77.50:8848
+    alicloud:
+      access-key: LTAI5tDpwvtZL5JHNnUmSuTN
+      secret-key: aYRnwujwf07OprKmsNrSMQXORRCiUV
+      oss:
+        endpoint: oss-cn-chengdu.aliyuncs.com
+        bucket-name: gulimall-lxsx
