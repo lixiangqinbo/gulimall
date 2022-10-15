@@ -13,3 +13,9 @@ spring:
       oss:
         endpoint: oss-cn-chengdu.aliyuncs.com
         bucket-name: gulimall-lxsx
+      sms:
+        host: https://dfsns.market.alicloudapi.com
+        appcode: 1ecf90a9186f42bfb6d2a0661e4885cb
+        method: POST
+        template-id: TPL_0000
+        path: /data/send_sms

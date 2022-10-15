@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lxsx.gulimall.product.entity.AttrGroupEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.lxsx.gulimall.product.vo.AttrAttrgroupRelationEntityVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -24,5 +25,5 @@ public interface AttrGroupDao extends BaseMapper<AttrGroupEntity> {
                                     @Param("params") Map<String, Object> params);
 
 
-
+    void inserBatch(@Param("aaglist")AttrAttrgroupRelationEntityVo[] aaglist);
 }

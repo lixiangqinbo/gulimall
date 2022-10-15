@@ -1,9 +1,15 @@
 package com.lxsx.gulimall.member.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.lxsx.gulimall.member.exception.PhoneException;
+import com.lxsx.gulimall.member.exception.UserNameException;
+
+import com.lxsx.gulimall.member.vo.LoginUserVo;
+import com.lxsx.gulimall.member.vo.UserRegisterVo;
 import com.lxsx.gulimall.utils.PageUtils;
 import com.lxsx.gulimall.member.entity.MemberEntity;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 /**
@@ -16,5 +22,15 @@ import java.util.Map;
 public interface MemberService extends IService<MemberEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    void saveMember(UserRegisterVo userRegisterVo);
+
+    void checkPhoneUnique(String phone) throws PhoneException;
+
+    void checkUserNameUnique(String userName) throws UserNameException;
+
+    MemberEntity queryUserByuserinfo(LoginUserVo loginUserVo);
+
+    BigDecimal queryMemberLevelFare(Long memberId);
 }
 

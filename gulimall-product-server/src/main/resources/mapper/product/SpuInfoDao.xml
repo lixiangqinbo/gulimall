@@ -15,6 +15,16 @@
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
     </resultMap>
+    <select id="selectSpuinfoWithBrandName" resultType="com.lxsx.gulimall.product.to.SpuInfoTo">
+        SELECT t3.sku_id, psi.id AS spu_id,psi.catalog_id,psi.spu_name,pb.`name` AS brand_name
+        FROM pms_spu_info AS psi
+        LEFT JOIN pms_brand AS pb ON psi.brand_id = pb.brand_id
+        LEFT JOIN pms_sku_info AS t3 ON t3.spu_id = psi.id
+        WHERE t3.sku_id IN
+        <foreach collection="skuIds" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
 
 
 </mapper>

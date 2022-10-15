@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.lxsx.gulimall.utils.PageUtils;
 import com.lxsx.gulimall.coupon.entity.SeckillSkuRelationEntity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,5 +17,9 @@ import java.util.Map;
 public interface SeckillSkuRelationService extends IService<SeckillSkuRelationEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    void saveAndRelation(SeckillSkuRelationEntity seckillSkuRelation);
+
+    List<SeckillSkuRelationEntity> queryBySessinIds(List<Long> killSessinIds);
 }
 

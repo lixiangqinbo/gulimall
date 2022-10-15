@@ -1,12 +1,17 @@
 package com.lxsx.gulimall.order.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.math.BigDecimal;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 订单
@@ -17,6 +22,7 @@ import lombok.Data;
  */
 @Data
 @TableName("oms_order")
+@NoArgsConstructor
 public class OrderEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -40,6 +46,7 @@ public class OrderEntity implements Serializable {
 	/**
 	 * create_time
 	 */
+	@JSONField(format="YYYY-MM-DD HH:MM:SS")
 	private Date createTime;
 	/**
 	 * 用户名
@@ -172,22 +179,33 @@ public class OrderEntity implements Serializable {
 	/**
 	 * 支付时间
 	 */
+	@JSONField(format="YYYY-MM-DD HH:MM:SS")
 	private Date paymentTime;
 	/**
 	 * 发货时间
 	 */
+	@JSONField(format="YYYY-MM-DD HH:MM:SS")
 	private Date deliveryTime;
 	/**
 	 * 确认收货时间
 	 */
+	@JSONField(format="YYYY-MM-DD HH:MM:SS")
 	private Date receiveTime;
 	/**
 	 * 评价时间
 	 */
+	@JSONField(format="YYYY-MM-DD HH:MM:SS")
 	private Date commentTime;
 	/**
 	 * 修改时间
 	 */
+	@JSONField(format="YYYY-MM-DD HH:MM:SS")
 	private Date modifyTime;
+
+	/**
+	 * 订单项数据
+	 */
+	@TableField(exist = false)
+	List<OrderItemEntity> orderItemEntityList;
 
 }

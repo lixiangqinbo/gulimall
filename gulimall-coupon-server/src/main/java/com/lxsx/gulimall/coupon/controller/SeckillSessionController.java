@@ -1,6 +1,7 @@
 package com.lxsx.gulimall.coupon.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,16 @@ public class SeckillSessionController {
     @Autowired
     private SeckillSessionService seckillSessionService;
 
+    /**
+     *查询最近3天的秒杀场次
+     *
+     */
+    @RequestMapping("/querySecKillSession")
+    public R querySecKillSession(){
+        List<SeckillSessionEntity> seckillSessionEntities
+                = seckillSessionService.querySecKillSession3day();
+        return R.ok().setData(seckillSessionEntities);
+    }
     /**
      * 列表
      */

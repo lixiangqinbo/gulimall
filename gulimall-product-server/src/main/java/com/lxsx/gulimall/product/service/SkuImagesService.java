@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.lxsx.gulimall.utils.PageUtils;
 import com.lxsx.gulimall.product.entity.SkuImagesEntity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,5 +17,9 @@ import java.util.Map;
 public interface SkuImagesService extends IService<SkuImagesEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    void saveSkuImages(List<SkuImagesEntity> skuImagesEntities);
+
+    List<SkuImagesEntity> queryImagesBySkuId(Long skuId);
 }
 

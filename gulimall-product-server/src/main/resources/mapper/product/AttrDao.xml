@@ -33,6 +33,28 @@
             </where>
         </if>
     </select>
+    <select id="selectByIds" resultMap="attrMap">
+        SELECT * FROM `pms_attr` WHERE `attr_id` IN
+        <foreach collection="attrIds" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+    <select id="selectByAttrIdAttrType" resultMap="attrMap">
+        SELECT * FROM `pms_attr` WHERE `attr_id` = #{attrId} AND `attr_type` = #{attrType}
+    </select>
+    <select id="selectBaseAttrByGroupIds" resultType="com.lxsx.gulimall.product.vo.skuinfovo.SpuBaseAttrVo">
+        SELECT attr.*,ppav.attr_value FROM
+        (SELECT paa.attr_group_id,pa.attr_id,pa.attr_name FROM pms_attr AS pa
+        LEFT JOIN pms_attr_attrgroup_relation AS paa ON  pa.attr_id = paa.attr_id
+        WHERE paa.attr_group_id IN
+        <foreach collection="groupIds" item="item" close=")" open="(" separator=",">
+            #{item}
+        </foreach>
+        AND pa.attr_type = #{attrType}) AS attr
+        LEFT JOIN pms_product_attr_value AS ppav
+        ON attr.attr_id = ppav.attr_id AND spu_id =#{spuId}
+    </select>
+
 
 
 </mapper>

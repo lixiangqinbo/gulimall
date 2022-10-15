@@ -1,8 +1,10 @@
 package com.lxsx.gulimall.product.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
+import com.lxsx.gulimall.constant.ProductConstant;
 import com.lxsx.gulimall.product.service.CategoryService;
 import com.lxsx.gulimall.product.vo.AttrAttrgroupRelationEntityVo;
 import com.lxsx.gulimall.product.vo.AttrGroupEntityVo;
@@ -121,14 +123,43 @@ public class AttrGroupController {
         attrGroupService.removeAttrRelation(attrAttrgroupRelationEntityVo);
         return R.ok();
     }
+
     //product/attrgroup/1/noattr/relation" 新增关联
     @GetMapping("/{attrgroupId}/noattr/relation")
-    public R noattrRelation(@PathVariable Long attrgroupId){
+    public R noattrRelation(@RequestParam Map<String,Object> params,@PathVariable Long attrgroupId){
         if (attrgroupId==null) {
             return R.error("参数为空！");
         }
-        log.info("noattrRelation方法拿到的参数：："+attrgroupId);
-        attrGroupService.queryNoRelationAttr(attrgroupId);
+        log.info("noattrRelation方法拿到的参数：："+attrgroupId+"::"+params.toString());
+        PageUtils pageUtils = attrGroupService.queryNoRelationAttr(params,attrgroupId);
+        return R.ok().put("page", pageUtils);
+    }
+
+    // url: this.$http.adornUrl("/product/attrgroup/attr/relation"),
+    //          method: "post",
+
+    @PostMapping("/attr/relation")
+    public R attrRelation(@RequestBody AttrAttrgroupRelationEntityVo[] attrAttrgroupRelationEntityVo){
+        if (attrAttrgroupRelationEntityVo==null||attrAttrgroupRelationEntityVo.length==0) {
+            return R.error("参数为空！");
+        }
+        log.info("attrRelation方法拿到的参数：："+attrAttrgroupRelationEntityVo.toString());
+        attrGroupService.saveGroupRelationBatch(attrAttrgroupRelationEntityVo);
         return R.ok();
     }
+    /**
+     * Request URL: http://localhost:8085/api/product/attrgroup/225/withattr?t=1663514543119
+     * Request Method: GET
+     */
+    @GetMapping("/{catelogId}/withattr")
+    public R withattr(@PathVariable("catelogId") Long catelogId){
+        if (catelogId==null) {
+            return R.error("参数为空！");
+        }
+        log.info("withattr：："+catelogId);
+        List<AttrGroupEntityVo> data = attrGroupService.queryGroupWithAttrByCatId(
+                ProductConstant.AttrEnum.ATTR_TYPE_BASE.getType(),catelogId);
+        return R.ok().put("data", data);
+    }
+
 }

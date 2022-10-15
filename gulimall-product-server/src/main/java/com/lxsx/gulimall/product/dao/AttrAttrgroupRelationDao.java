@@ -20,6 +20,7 @@ import java.util.List;
 public interface AttrAttrgroupRelationDao extends BaseMapper<AttrAttrgroupRelationEntity> {
 
     AttrAttrgroupRelationEntity selectByAttrId(@Param("attrId") Long attrId);
+    List<AttrAttrgroupRelationEntity> selectByAttrId1(@Param("attrId") Long attrId);
 
     void updateByAttrId(@Param("attrId") Long attrId, @Param("attrGroupId")Long attrGroupId);
 
@@ -28,6 +29,10 @@ public interface AttrAttrgroupRelationDao extends BaseMapper<AttrAttrgroupRelati
     IPage<AttrAttrgroupRelationEntity> selectByAttrGroupId(IPage<AttrAttrgroupRelationEntity> page,@Param("attrgroupId")Long attrgroupId);
 
     void deleteByAttrIdsAndGroupIds(@Param("arList")AttrAttrgroupRelationEntityVo[] attrAttrgroupRelationEntityVo);
+
+    void inserBatch(@Param("arList")AttrAttrgroupRelationEntityVo[] attrAttrgroupRelationEntityVo);
+
+    List<AttrAttrgroupRelationEntity> selectByGroupIds(@Param("groupIds") List<Long> groupIds);
 }
 
 

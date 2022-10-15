@@ -2,7 +2,11 @@ package com.lxsx.gulimall.product.dao;
 
 import com.lxsx.gulimall.product.entity.SpuInfoEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.lxsx.gulimall.product.to.SpuInfoTo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * spu信息
@@ -13,5 +17,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface SpuInfoDao extends BaseMapper<SpuInfoEntity> {
-	
+
+    List<SpuInfoTo> selectSpuinfoWithBrandName(@Param("skuIds") List<Long> skuIds);
 }

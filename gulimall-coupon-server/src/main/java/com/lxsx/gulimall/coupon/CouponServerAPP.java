@@ -10,7 +10,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication
 @MapperScan(basePackages ="com.lxsx.gulimall.coupon.dao" )
 @EnableDiscoveryClient
-@EnableFeignClients
+@EnableFeignClients(basePackages = "com.lxsx.gulimall")
 public class CouponServerAPP {
 
     public static void main(String[] args) {

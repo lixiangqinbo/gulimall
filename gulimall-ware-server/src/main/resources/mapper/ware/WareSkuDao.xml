@@ -12,6 +12,21 @@
         <result property="skuName" column="sku_name"/>
         <result property="stockLocked" column="stock_locked"/>
     </resultMap>
+    <update id="lockWaresku">
+        UPDATE wms_ware_sku SET stock_locked = stock_locked+#{num} WHERE ware_id = #{wareId} AND sku_id =#{skuId} AND stock-stock_locked>=#{num}
+    </update>
+    <update id="updateLockedSku">
+        UPDATE wms_ware_sku SET stock_locked = stock_locked-#{skuNum} WHERE ware_id = #{wareId} AND sku_id =#{skuId}
+    </update>
+    <update id="updateWareSku">
+         UPDATE wms_ware_sku SET stock_locked = stock_locked-#{skuNum},stock = stock-#{skuNum} WHERE ware_id = #{wareId} AND sku_id =#{skuId}
+    </update>
+    <select id="selectWareSkuListByskuIds" resultMap="wareSkuMap">
+        SELECT SUM(stock - stock_locked) AS stock ,sku_id,sku_name FROM wms_ware_sku WHERE sku_id IN
+        <foreach collection="skuIds" item="item" separator="," open="(" close=")" >
+            #{item}
+        </foreach>
+    </select>
 
 
 </mapper>

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lxsx.gulimall.product.entity.AttrAttrgroupRelationEntity;
 import com.lxsx.gulimall.product.service.AttrAttrgroupRelationService;
 
+import javax.annotation.Resource;
 
 
 /**
@@ -27,7 +28,7 @@ import com.lxsx.gulimall.product.service.AttrAttrgroupRelationService;
 @RestController
 @RequestMapping("product/attrattrgrouprelation")
 public class AttrAttrgroupRelationController {
-    @Autowired
+    @Resource
     private AttrAttrgroupRelationService attrAttrgroupRelationService;
 
     /**

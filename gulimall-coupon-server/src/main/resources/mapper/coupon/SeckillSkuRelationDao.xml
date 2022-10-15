@@ -14,6 +14,12 @@
         <result property="seckillLimit" column="seckill_limit"/>
         <result property="seckillSort" column="seckill_sort"/>
     </resultMap>
+    <select id="selectBySessinIds" resultType="com.lxsx.gulimall.coupon.entity.SeckillSkuRelationEntity">
+        SELECT * FROM sms_seckill_sku_relation WHERE promotion_session_id IN
+        <foreach collection="killSessinIds" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </select>
 
 
 </mapper>

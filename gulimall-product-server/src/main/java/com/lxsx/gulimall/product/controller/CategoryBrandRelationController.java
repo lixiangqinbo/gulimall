@@ -4,9 +4,12 @@ import java.security.PrivateKey;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
+import com.lxsx.gulimall.product.entity.BrandEntity;
 import com.lxsx.gulimall.product.service.BrandService;
 import com.lxsx.gulimall.product.service.CategoryService;
+import com.lxsx.gulimall.product.vo.BrandEntityVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -107,6 +110,29 @@ public class CategoryBrandRelationController {
 		categoryBrandRelationService.removeByIds(Arrays.asList(ids));
 
         return R.ok();
+    }
+
+
+    /**
+     * Request URL: http://localhost:8085/api/product/categorybrandrelation/brands/list?t=1663513752376
+     * Request Method: GET
+     * @param catId
+     * @return
+     */
+    @GetMapping("/brands/list")
+    //@RequiresPermissions("product:categorybrandrelation:delete")
+    public R brandList(@RequestParam(value = "catId",required = true) Long catId){
+        if (catId==null) {
+            return R.error("参数异常");
+        }
+        List<BrandEntity> brandEntities = categoryBrandRelationService.querybrandsBycatId(catId);
+        List<BrandEntityVo> data = brandEntities.stream().map(brandEntity -> {
+            BrandEntityVo brandEntityVo = new BrandEntityVo();
+            brandEntityVo.setBrandId(brandEntity.getBrandId());
+            brandEntityVo.setName(brandEntity.getName());
+            return brandEntityVo;
+        }).collect(Collectors.toList());
+        return R.ok().put("data", data);
     }
 
 }

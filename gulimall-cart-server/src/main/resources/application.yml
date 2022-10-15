@@ -1,0 +1,43 @@
+server:
+  port: 10001
+spring:
+  application:
+    name: gulimall-cart
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 162.14.77.50:8848
+  jackson:
+    date-format: YYYY-MM-DD HH:MM:SS
+  thymeleaf:
+    check-template: false
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+  redis:
+    host: 127.0.0.1
+    port: 6379
+
+#Spring session 配置
+  session:
+    store-type: redis
+    timeout: 30m
+
+  #配置sprin缓存redis
+  cache:
+    type: redis
+    redis:
+      #开启缓存空值 防止缓存穿透
+      cache-null-values: true
+      #如果指定了前缀就用我们指定的前缀，如果没有就默认使用缓存的名字作为前缀
+      key-prefix: CART_
+      use-key-prefix: true
+      #设置过期时间
+      time-to-live: 3600000
+
+#线程池配置
+gulimall:
+  thread:
+    core-size: 20
+    keep-alicve-time: 10
+    max-size: 200

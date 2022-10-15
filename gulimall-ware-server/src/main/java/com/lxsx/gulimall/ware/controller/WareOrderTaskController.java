@@ -30,6 +30,13 @@ public class WareOrderTaskController {
     @Autowired
     private WareOrderTaskService wareOrderTaskService;
 
+
+    @RequestMapping("/updateTaskAndWare/{orderSn}")
+    public R updateTaskAndWare(@PathVariable("orderSn") String orderSn){
+        wareOrderTaskService.updateTaskAndWare(orderSn);
+        return R.ok();
+    }
+
     /**
      * 列表
      */

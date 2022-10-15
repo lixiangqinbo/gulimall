@@ -1,9 +1,12 @@
 package com.lxsx.gulimall.product.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 
+import com.lxsx.gulimall.product.to.SpuInfoTo;
+import com.lxsx.gulimall.product.vo.productvo.SpuSaveVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,8 +34,21 @@ public class SpuInfoController {
     @Autowired
     private SpuInfoService spuInfoService;
 
+
+    /**
+     * 信息 spu_name spu_id spu_iamge brand_name catlog_id
+     */
+    @RequestMapping("/spuinfo")
+    public R getSpuinfoWithBrandName(@RequestBody List<Long> skuIds){
+        List<SpuInfoTo> spuInfos = spuInfoService.getSpuinfoWithBrandName(skuIds);
+        return R.ok().setData(spuInfos);
+    }
+
+
     /**
      * 列表
+     * Request URL: http://localhost:8085/api/product/spuinfo/list?t=1663608172966&status=&key=&brandId=0&catelogId=0&page=1&limit=10
+     * Request Method: GET
      */
     @RequestMapping("/list")
    //@RequiresPermissions("product:spuinfo:list")
@@ -59,9 +75,9 @@ public class SpuInfoController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("product:spuinfo:save")
-    public R save(@RequestBody SpuInfoEntity spuInfo){
-		spuInfoService.save(spuInfo);
-
+    public R save(@RequestBody SpuSaveVo vo){
+		//spuInfoService.save(spuInfo);
+        spuInfoService.saveSpuInfo(vo);
         return R.ok();
     }
 
@@ -83,6 +99,16 @@ public class SpuInfoController {
     //@RequiresPermissions("product:spuinfo:delete")
     public R delete(@RequestBody Long[] ids){
 		spuInfoService.removeByIds(Arrays.asList(ids));
+
+        return R.ok();
+    }
+
+    /*equest URL: http://localhost:8085/api/product/spuinfo/{spuId}/up
+    Request Method: POST*/
+    @RequestMapping("/{spuId}/up")
+    //@RequiresPermissions("product:spuinfo:delete")
+    public R delete(@PathVariable Long spuId){
+        spuInfoService.spuUp(spuId);
 
         return R.ok();
     }

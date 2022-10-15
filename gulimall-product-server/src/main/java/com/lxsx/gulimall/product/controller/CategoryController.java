@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.lxsx.gulimall.product.dao.CategoryBrandRelationDao;
 import com.lxsx.gulimall.product.entity.CategoryBrandRelationEntity;
+import com.lxsx.gulimall.product.service.CategoryBrandRelationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,8 @@ import com.lxsx.gulimall.product.entity.CategoryEntity;
 import com.lxsx.gulimall.product.service.CategoryService;
 import com.lxsx.gulimall.utils.PageUtils;
 import com.lxsx.gulimall.utils.R;
+
+import javax.annotation.Resource;
 
 
 /**
@@ -34,8 +37,10 @@ import com.lxsx.gulimall.utils.R;
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;
-    @Autowired
+    @Resource
     private CategoryBrandRelationDao categoryBrandRelationDao;
+    @Resource
+    private CategoryBrandRelationService categoryBrandRelationService;
 
     /**
      * 查出所有分类以及子分类，以树形结构组装起来
@@ -79,17 +84,10 @@ public class CategoryController {
     /**
      * 修改
      */
-    @Transactional
     @RequestMapping("/update")
     //@RequiresPermissions("product:category:update")
     public R update(@RequestBody CategoryEntity category){
-		categoryService.updateById(category);
-
-        CategoryBrandRelationEntity categoryBrandRelationEntity =new
-                CategoryBrandRelationEntity();
-        categoryBrandRelationEntity.setCatelogName(category.getName());
-        categoryBrandRelationEntity.setCatelogId(category.getCatId());
-        categoryBrandRelationDao.updateBrandRelation(categoryBrandRelationEntity);
+        categoryBrandRelationService.updateBrandRelation(category);
         return R.ok();
     }
 

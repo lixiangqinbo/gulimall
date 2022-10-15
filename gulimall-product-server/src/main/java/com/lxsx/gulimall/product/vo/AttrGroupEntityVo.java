@@ -1,10 +1,13 @@
 package com.lxsx.gulimall.product.vo;
 
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.lxsx.gulimall.product.entity.AttrEntity;
 import com.lxsx.gulimall.product.entity.AttrGroupEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -40,7 +43,10 @@ public class AttrGroupEntityVo extends AttrGroupEntity {
     /**
      * 3级目录的根路径
      */
-    Long[] catelogPath;
+    private Long[] catelogPath;
+
+    private List<AttrEntity> attrs;
+
 
 
 }

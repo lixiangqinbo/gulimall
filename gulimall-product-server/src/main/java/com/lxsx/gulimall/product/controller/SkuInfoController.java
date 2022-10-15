@@ -1,14 +1,13 @@
 package com.lxsx.gulimall.product.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
+import com.lxsx.gulimall.product.to.SkuPriceTo;
+import com.lxsx.gulimall.to.SkuInfoTo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.lxsx.gulimall.product.entity.SkuInfoEntity;
 import com.lxsx.gulimall.product.service.SkuInfoService;
@@ -84,6 +83,37 @@ public class SkuInfoController {
 		skuInfoService.removeByIds(Arrays.asList(skuIds));
 
         return R.ok();
+    }
+
+    /**
+     * 查询指定id的sku_info
+     */
+    @PostMapping("/querySkuInfoEntityById")
+    //@RequiresPermissions("product:skuinfo:delete")
+    public R querySkuInfoEntityById(@RequestBody SkuInfoTo skuInfoTo){
+        SkuInfoEntity skuInfoEntity = skuInfoService.getById(skuInfoTo.getSkuId());
+        return R.ok().put("data",skuInfoEntity);
+    }
+
+    /**
+     * 根据skuId 查询 sku的价格
+     * @param skuIds
+     * @return
+     */
+    @RequestMapping("/querySkuPrice")
+    public R querySkuPrice(@RequestBody List<Long> skuIds){
+        List<SkuPriceTo> priceTos = skuInfoService.querySkuPriceByskuIds(skuIds);
+        return R.ok().setData(priceTos);
+    }
+    /**
+     * 根据skuIds 批量查询 sku信息
+     * @param skuIds
+     * @return
+     */
+    @RequestMapping("/querySkuInfoBySkuIds")
+    public R querySkuInfoBySkuIds(@RequestBody List<Long> skuIds){
+        List<SkuInfoEntity> skuInfoEntities = skuInfoService.querySkuInfoBySkuIds(skuIds);
+        return R.ok().setData(skuInfoEntities);
     }
 
 }

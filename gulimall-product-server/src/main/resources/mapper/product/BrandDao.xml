@@ -17,6 +17,12 @@
     <select id="getBrandById" resultMap="brandMap">
         SELECT  * FROM `pms_brand` WHERE `brand_id` = #{brandId}
     </select>
+    <select id="selectBrandByIds" resultMap="brandMap">
+        SELECT  * FROM `pms_brand` WHERE `brand_id` IN
+        <foreach collection="brandIds" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </select>
 
 
 </mapper>

@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lxsx.gulimall.product.entity.AttrEntity;
 import com.lxsx.gulimall.product.vo.AttrAttrgroupRelationEntityVo;
+import com.lxsx.gulimall.product.vo.AttrEntityVo;
+import com.lxsx.gulimall.product.vo.AttrGroupEntityVo;
+import com.lxsx.gulimall.product.vo.skuinfovo.SpuItemGroupAttrVo;
 import com.lxsx.gulimall.utils.PageUtils;
 import com.lxsx.gulimall.product.entity.AttrGroupEntity;
 import org.apache.ibatis.annotations.Param;
@@ -31,6 +34,14 @@ public interface AttrGroupService extends IService<AttrGroupEntity> {
 
     void removeAttrRelation(AttrAttrgroupRelationEntityVo[] attrAttrgroupRelationEntityVo);
 
-    List<AttrEntity> queryNoRelationAttr(Long attrgroupId);
+    PageUtils queryNoRelationAttr( Map<String,Object> params,Long attrgroupId);
+
+    void saveGroupRelationBatch(AttrAttrgroupRelationEntityVo[] attrAttrgroupRelationEntityVo);
+
+    List<AttrGroupEntityVo> queryGroupWithAttrByCatId(final Integer attrType,Long catelogId);
+
+
+    List<SpuItemGroupAttrVo> queryAttrGropWithAttrsByCatId(Long catalogId,Long spuId);
 }
+
 

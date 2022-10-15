@@ -1,5 +1,6 @@
 package com.lxsx.gulimall.product.vo;
 
+import com.lxsx.gulimall.product.entity.AttrAttrgroupRelationEntity;
 import com.lxsx.gulimall.product.entity.AttrEntity;
 import com.lxsx.gulimall.product.entity.AttrGroupEntity;
 import com.lxsx.gulimall.valid.ListValid;
@@ -55,7 +56,6 @@ public class AttrEntityVo {
      */
     private Integer showDesc;
 
-    @NotNull(message = "分组ID不能为空")
     private Long attrGroupId;
     /**
      * 3级目录的根路径
@@ -73,5 +73,14 @@ public class AttrEntityVo {
      * 属性分组名字
      */
     String attrGroupName;
+
+    List<AttrAttrgroupRelationEntity> attrAttrgroupRelationEntities;
+    /**
+     * 			"catelogName": "手机/数码/手机", //所属分类名字
+     * 			"groupName": "主体", //所属分组名字
+     */
+
+
+
 }
 

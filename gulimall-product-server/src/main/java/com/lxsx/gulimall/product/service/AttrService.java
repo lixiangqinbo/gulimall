@@ -20,6 +20,7 @@ public interface AttrService extends IService<AttrEntity> {
     PageUtils queryPage(Map<String, Object> params);
 
     PageUtils queryPageForAttr(Map<String, Object> params);
+//    PageUtils queryPageForAttr1(Map<String, Object> params);
 
     void cascadeSave(AttrEntityVo attrEntityVo);
 
@@ -28,5 +29,9 @@ public interface AttrService extends IService<AttrEntity> {
     void cascadeUpdateById(AttrEntityVo attrVo);
 
     void cascadeRemove(List<Long> asList);
+
+    PageUtils queryBaseAttrPage(Map<String, Object> params, Long catelogId, String type);
+
+
 }
 

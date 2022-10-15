@@ -1,6 +1,7 @@
 package com.lxsx.gulimall.coupon.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,18 @@ public class SeckillSkuRelationController {
     private SeckillSkuRelationService seckillSkuRelationService;
 
     /**
+     *查询最近3天的秒杀场次
+     * 所有有关联的关系信息
+     */
+    @RequestMapping("/querySecKillSessionRelation")
+    public R querySecKillSessionRelation(@RequestBody List<Long> killSessinIds){
+        List<SeckillSkuRelationEntity> seckillSkuRelationEntities = seckillSkuRelationService.queryBySessinIds(killSessinIds);
+
+        return R.ok().setData(seckillSkuRelationEntities);
+    }
+
+
+    /**
      * 列表
      */
     @RequestMapping("/list")
@@ -59,7 +72,8 @@ public class SeckillSkuRelationController {
     @RequestMapping("/save")
     //@RequiresPermissions("coupon:seckillskurelation:save")
     public R save(@RequestBody SeckillSkuRelationEntity seckillSkuRelation){
-		seckillSkuRelationService.save(seckillSkuRelation);
+
+		seckillSkuRelationService.saveAndRelation(seckillSkuRelation);
 
         return R.ok();
     }

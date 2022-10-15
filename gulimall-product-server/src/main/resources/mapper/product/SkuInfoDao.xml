@@ -17,6 +17,20 @@
         <result property="price" column="price"/>
         <result property="saleCount" column="sale_count"/>
     </resultMap>
+    <select id="selectSkuPriceToList" resultType="com.lxsx.gulimall.product.to.SkuPriceTo">
+        SELECT `sku_id`,`price` FROM `pms_sku_info`
+        WHERE `sku_id` IN
+        <foreach collection="skuIds" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </select>
+    <select id="selectSkuInfoBySkuIdsskuIds" resultType="com.lxsx.gulimall.product.entity.SkuInfoEntity">
+        SELECT * FROM `pms_sku_info`
+        WHERE `sku_id` IN
+        <foreach collection="skuIds" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </select>
 
 
 </mapper>

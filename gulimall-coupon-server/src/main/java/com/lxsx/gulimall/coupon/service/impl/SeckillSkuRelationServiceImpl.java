@@ -1,6 +1,9 @@
 package com.lxsx.gulimall.coupon.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -20,10 +23,23 @@ public class SeckillSkuRelationServiceImpl extends ServiceImpl<SeckillSkuRelatio
     public PageUtils queryPage(Map<String, Object> params) {
         IPage<SeckillSkuRelationEntity> page = this.page(
                 new Query<SeckillSkuRelationEntity>().getPage(params),
-                new QueryWrapper<SeckillSkuRelationEntity>()
+                new LambdaQueryWrapper<SeckillSkuRelationEntity>().eq(SeckillSkuRelationEntity::getPromotionSessionId, params.get("promotionSessionId"))
         );
 
         return new PageUtils(page);
+    }
+
+    @Override
+    public void saveAndRelation(SeckillSkuRelationEntity seckillSkuRelation) {
+        this.baseMapper.insert(seckillSkuRelation);
+
+    }
+
+    @Override
+    public List<SeckillSkuRelationEntity> queryBySessinIds(List<Long> killSessinIds) {
+        List<SeckillSkuRelationEntity> seckillSkuRelationEntities =
+                this.baseMapper.selectBySessinIds(killSessinIds);
+        return seckillSkuRelationEntities;
     }
 
 }

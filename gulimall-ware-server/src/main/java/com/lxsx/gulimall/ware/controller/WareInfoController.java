@@ -1,20 +1,20 @@
 package com.lxsx.gulimall.ware.controller;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.lxsx.gulimall.to.MemberEntityTo;
+import com.lxsx.gulimall.ware.constants.AuthServerContants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.lxsx.gulimall.ware.entity.WareInfoEntity;
 import com.lxsx.gulimall.ware.service.WareInfoService;
 import com.lxsx.gulimall.utils.PageUtils;
 import com.lxsx.gulimall.utils.R;
 
+import javax.servlet.http.HttpSession;
 
 
 /**
@@ -30,6 +30,34 @@ public class WareInfoController {
     @Autowired
     private WareInfoService wareInfoService;
 
+
+
+
+    /**
+     * 根据收获地址计算运费
+     * Request URL: http://gulimall.com/api/ware/wareinfo/fare?addrId=2
+     * Request Method: GET
+     * @param addrId
+     * @return
+     */
+    //TODO NULL
+    @GetMapping("/fare")
+    public R getFare(@RequestParam("addrId") Long addrId, HttpSession session){
+        /**
+         * 浏览器直接访问：http://gulimall.com/api/ware/wareinfo/fare?addrId=2 可以拿到session数据
+         * themeleaf：发送请求
+         *  $.get("http://gulimall.com/api/ware/wareinfo/fare?addrId=" + addrId, function (resp) {
+         *  拿不到seesion数据 @空指针异常
+         */
+        MemberEntityTo memberEntityTo = (MemberEntityTo) session.getAttribute(AuthServerContants.LOGIN_USER);
+        if (memberEntityTo==null) {
+            BigDecimal fare = wareInfoService.queryFare(memberEntityTo.getId());
+            return R.ok().put("data",fare);
+        }
+       return R.error();
+
+    }
+
     /**
      * 列表
      */
@@ -40,7 +68,6 @@ public class WareInfoController {
 
         return R.ok().put("page", page);
     }
-
 
     /**
      * 信息

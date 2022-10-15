@@ -1,6 +1,7 @@
 package com.lxsx.gulimall.member.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,17 @@ public class MemberReceiveAddressController {
     }
 
     /**
+     * 信息
+     */
+    @RequestMapping("/memberReceiveAddress/{id}")
+    //@RequiresPermissions("member:memberreceiveaddress:info")
+    public R memberReceiveAddress(@PathVariable("id") Long id){
+        MemberReceiveAddressEntity memberReceiveAddress = memberReceiveAddressService.getById(id);
+
+        return R.ok().setData(memberReceiveAddress);
+    }
+
+    /**
      * 保存
      */
     @RequestMapping("/save")
@@ -86,4 +98,22 @@ public class MemberReceiveAddressController {
         return R.ok();
     }
 
+    /**
+     * 通过memberId查询
+     */
+    @RequestMapping("/{memberId}/info")
+    public R memberAddressInfo(@PathVariable("memberId") Long memberId){
+        List<MemberReceiveAddressEntity> entities = memberReceiveAddressService.queryMemberReceiveAddressByMemberId(memberId);
+        return R.ok().setData(entities);
+    }
+
+
+    /**
+     * 通过addrId查询
+     */
+    @RequestMapping("/{addrId}/addrinfo")
+    R memberAddressInfoByAddrId(@PathVariable("addrId") Long addrId){
+        MemberReceiveAddressEntity entities = memberReceiveAddressService.queryMemberReceiveAddressByAddrId(addrId);
+        return R.ok().setData(entities);
+    }
 }

@@ -1,6 +1,7 @@
 package com.lxsx.gulimall.product.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.lxsx.gulimall.product.vo.Catelog2Vo;
 import com.lxsx.gulimall.utils.PageUtils;
 import com.lxsx.gulimall.product.entity.CategoryEntity;
 
@@ -30,5 +31,8 @@ public interface CategoryService extends IService<CategoryEntity> {
     Long[] getCatelogPath(Long attrGroupId);
 
 
+    Map<String,List<Catelog2Vo>> getCatelogsTree();
+
+    List<CategoryEntity> queryLeve1Catalog();
 }
 

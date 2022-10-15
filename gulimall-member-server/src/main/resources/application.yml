@@ -1,21 +1,39 @@
-#server:
-#  port: 8081
-#spring:
-#  application:
-#    name: gulimall-member
-#  datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://47.96.187.214:3306/gulimall_ums?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
-#    username: root
-#    password: qwe123
-#
-#mybatis-plus:
-#  type-aliases-package: com.lxsx.gulimall.product.entity
-#  mapper-locations: classpath:mapper/**/*.xml
-#  # 配置日志
-#  configuration:
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-#
-#  global-config:
-#    db-config:
-#      id-type: auto
+server:
+  port: 8081
+spring:
+  application:
+    name: gulimall-member
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.96.187.214:3306/gulimall_ums?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: qwe123
+  jackson:
+    date-format: YYYY-MM-DD HH:MM:SS
+  thymeleaf:
+    check-template: false
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+  redis:
+    host: 127.0.0.1
+    port: 6379
+
+  #Spring session 配置
+  session:
+    store-type: redis
+    timeout: 30m
+
+mybatis-plus:
+  type-aliases-package: com.lxsx.gulimall.product.entity
+  mapper-locations: classpath:mapper/**/*.xml
+  # 配置日志
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+  global-config:
+    db-config:
+      id-type: auto
+
+
+

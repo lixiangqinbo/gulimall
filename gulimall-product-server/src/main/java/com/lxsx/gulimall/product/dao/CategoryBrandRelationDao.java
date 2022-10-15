@@ -20,4 +20,7 @@ public interface CategoryBrandRelationDao extends BaseMapper<CategoryBrandRelati
     List<CategoryBrandRelationEntity> getCatalogList(@Param("brandId") Long brandId);
 
     void updateBrandRelation(CategoryBrandRelationEntity brandRelationEntity);
+
+    List<CategoryBrandRelationEntity> selectBrandByCatId(@Param("catId") Long catId);
+
 }

@@ -23,6 +23,9 @@
         WHERE  `brand_id` = #{brandId}
 
     </select>
+    <select id="selectBrandByCatId" resultMap="categoryBrandRelationMap">
+        SELECT * FROM `pms_category_brand_relation` WHERE `catelog_id`= #{catId}
+    </select>
 
 
 </mapper>

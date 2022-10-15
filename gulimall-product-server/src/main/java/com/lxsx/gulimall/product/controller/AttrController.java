@@ -1,9 +1,15 @@
 package com.lxsx.gulimall.product.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
+import com.lxsx.gulimall.constant.ProductConstant;
+import com.lxsx.gulimall.product.entity.ProductAttrValueEntity;
+import com.lxsx.gulimall.product.service.AttrGroupService;
+import com.lxsx.gulimall.product.service.ProductAttrValueService;
 import com.lxsx.gulimall.product.vo.AttrEntityVo;
+import com.lxsx.gulimall.product.vo.AttrGroupEntityVo;
 import com.lxsx.gulimall.utils.PageUtils;
 import com.lxsx.gulimall.utils.R;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +34,11 @@ import com.lxsx.gulimall.product.service.AttrService;
 public class AttrController {
     @Autowired
     private AttrService attrService;
+    @Autowired
+    private ProductAttrValueService productAttrValueService;
+
+    @Autowired
+    private AttrGroupService attrGroupService;
 
     /**
      * 列表:http://localhost:8085/api/product/attr/base/list/0?t=1663396019419&page=1&limit=10&key=
@@ -51,7 +62,10 @@ public class AttrController {
     /**http://localhost:8085/api/product/attr/info/1?t=1663401632771
      * 返回一个三级目录根路径，所属分组
      * 信息
-     */
+     * search  远程调用对象
+     @GetMapping("/product/attr/info/{attrId}")
+     public R attrInfo(@PathVariable("attrId") Long attrId); */
+
     @GetMapping("/info/{attrId}")
    //@RequiresPermissions("product:attr:info")
     public R info(@PathVariable("attrId") Long attrId){
@@ -97,6 +111,16 @@ public class AttrController {
         return R.ok();
     }
 
+    /**product/attr/base/listforspu/{spuId}
+     * GET
+     * 修改
+     */
+    @PostMapping("/update/{spuId}")
+    public R updateSpuAttr(@PathVariable Long spuId,
+                           @RequestBody List<ProductAttrValueEntity> entities){
+        productAttrValueService.updateSpuAttr(spuId,entities);
+        return R.ok();
+    }
     /**
      * 删除
      */
@@ -107,5 +131,40 @@ public class AttrController {
 
         return R.ok();
     }
+    /**
+     * Request URL: http://localhost:8085/api/product/attr/sale/list/225?t=1663573034641&page=1&limit=500
+     * Request Method: GET
+     * @param catelogId
+     * @return
+     */
+/*    @GetMapping("/sale/list/{catelogId}")
+    public R attrSaleList(@PathVariable("catelogId") Long catelogId){
+        if (catelogId==null) {
+            return R.error("参数为空！");
+        }
+        log.info("withattr：："+catelogId);
+        List<AttrGroupEntityVo> data = attrGroupService.queryGroupWithAttrByCatId(
+                ProductConstant.AttrEnum.ATTR_TYPE_SALE.getType(),catelogId);
+        return R.ok().put("data", data);
+    }*/
 
+    //product/attr/sale/list/0?
+    ///product/attr/base/list/{catelogId}
+    @GetMapping("/{attrType}/list/{catelogId}")
+    public R baseAttrList(@RequestParam Map<String, Object> params,
+                          @PathVariable("catelogId") Long catelogId,
+                          @PathVariable("attrType")String type){
+
+        PageUtils page = attrService.queryBaseAttrPage(params,catelogId,type);
+        return R.ok().put("page", page);
+    }
+
+    //product/attr/base/listforspu/{spuId}
+    //GET
+    @GetMapping("/base/listforspu/{spuId}")
+    //@RequiresPermissions("product:attr:delete")
+    public R listForSpu(@PathVariable Long spuId){
+    List<ProductAttrValueEntity> data = productAttrValueService.querySpuAttrValueList(spuId);
+        return R.ok().put("data", data);
+    }
 }

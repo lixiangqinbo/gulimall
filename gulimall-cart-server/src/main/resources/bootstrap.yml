@@ -1,0 +1,10 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: 162.14.77.50:8848
+        namespace: b1eaa087-23ff-46ef-a21e-f63ec499cb8f
+        ext-config[0]:
+          group: DEFAULT_GROUP
+          data-id: application.yml
+          refresh: true

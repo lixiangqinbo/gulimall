@@ -26,4 +26,9 @@ public class SpuImagesServiceImpl extends ServiceImpl<SpuImagesDao, SpuImagesEnt
         return new PageUtils(page);
     }
 
+    @Override
+    public void saveSpuImage(SpuImagesEntity spuImagesEntity) {
+        this.baseMapper.insert(spuImagesEntity);
+    }
+
 }

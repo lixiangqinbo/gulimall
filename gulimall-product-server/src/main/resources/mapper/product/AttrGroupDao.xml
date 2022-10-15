@@ -12,6 +12,7 @@
         <result property="icon" column="icon"/>
         <result property="catelogId" column="catelog_id"/>
     </resultMap>
+
     <select id="queryPage" resultMap="attrGroupMap">
         SELECT * FROM `pms_attr_group`
         <where>

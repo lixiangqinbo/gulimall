@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.lxsx.gulimall.utils.PageUtils;
 import com.lxsx.gulimall.ware.entity.WareInfoEntity;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 /**
@@ -16,5 +17,7 @@ import java.util.Map;
 public interface WareInfoService extends IService<WareInfoEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    BigDecimal queryFare(Long memberId);
 }
 

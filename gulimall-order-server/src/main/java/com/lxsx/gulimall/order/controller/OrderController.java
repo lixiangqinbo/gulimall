@@ -41,6 +41,16 @@ public class OrderController {
         return R.ok().put("page", page);
     }
 
+    /**
+     * 列表
+     */
+    @RequestMapping("/orderlist")
+    public R orderList(@RequestBody Map<String, Object> params){
+        PageUtils page = orderService.queryDetailPage(params);
+
+        return R.ok().setData(page);
+    }
+
 
     /**
      * 信息
@@ -52,6 +62,17 @@ public class OrderController {
 
         return R.ok().put("order", order);
     }
+    /**
+     * 信息
+     * @param  orderSn
+     */
+    @RequestMapping("/order/{orderSn}")
+    R infoByOrderSn( @PathVariable("orderSn") String orderSn){
+        OrderEntity order = orderService.getByOrderSn(orderSn);
+
+        return R.ok().setData(order);
+    }
+
 
     /**
      * 保存

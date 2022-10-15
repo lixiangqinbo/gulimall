@@ -1,6 +1,9 @@
 package com.lxsx.gulimall.product.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.lxsx.gulimall.product.entity.BrandEntity;
+import com.lxsx.gulimall.product.entity.CategoryEntity;
+import com.lxsx.gulimall.product.vo.BrandEntityVo;
 import com.lxsx.gulimall.utils.PageUtils;
 import com.lxsx.gulimall.product.entity.CategoryBrandRelationEntity;
 
@@ -20,5 +23,8 @@ public interface CategoryBrandRelationService extends IService<CategoryBrandRela
 
     List<CategoryBrandRelationEntity> getCatalogList(Long brandId);
 
+    List<BrandEntity> querybrandsBycatId(Long catId);
+
+    void updateBrandRelation(CategoryEntity category);
 }
 

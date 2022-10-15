@@ -1,20 +1,24 @@
 package com.lxsx.gulimall.ware.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
+import com.lxsx.gulimall.mq.MQConstants;
+import com.lxsx.gulimall.to.LockWareSkuTo;
+import com.lxsx.gulimall.to.SkuWareTo;
+import com.lxsx.gulimall.ware.exception.WareLockedException;
+import com.lxsx.gulimall.ware.vo.WareSkuLockVo;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.lxsx.gulimall.ware.entity.WareSkuEntity;
 import com.lxsx.gulimall.ware.service.WareSkuService;
 import com.lxsx.gulimall.utils.PageUtils;
 import com.lxsx.gulimall.utils.R;
 
+import javax.annotation.Resource;
 
 
 /**
@@ -29,6 +33,46 @@ import com.lxsx.gulimall.utils.R;
 public class WareSkuController {
     @Autowired
     private WareSkuService wareSkuService;
+
+    /**
+     * ware/waresku
+     * 检查是都有库存
+     * @param skuIds
+     * @return
+     */
+    @PostMapping("/getWaresku")
+    public R getWaresku(@RequestBody List<Long> skuIds){
+        List<SkuWareTo> skuWareTos = wareSkuService.getWareskuByskuId(skuIds);
+        return R.ok().setData(skuWareTos);
+    }
+    /**
+     * 锁库存
+     * @param lockWareSkuTo
+     * @return
+     */
+    @PostMapping("/lockWaresku")
+    R lockWaresku(@RequestBody List<LockWareSkuTo> lockWareSkuTo){
+        List<LockWareSkuTo> skuWareTos = wareSkuService.lockWareskuByskuId(lockWareSkuTo);
+        return R.ok().setData(skuWareTos);
+    }
+
+    /**
+     * 锁库存
+     * @param wareSkuLockVo
+     * @return
+     */
+    @PostMapping("/newlockWaresku")
+    R newLockWaresku(@RequestBody WareSkuLockVo wareSkuLockVo) {
+        Boolean res = null;
+        try {
+            res = wareSkuService.lockWaresku(wareSkuLockVo);
+            return R.ok().setData(res);
+        } catch (WareLockedException e) {
+            e.printStackTrace();
+            return R.error(e.getMessage());
+        }
+
+    }
 
     /**
      * 列表

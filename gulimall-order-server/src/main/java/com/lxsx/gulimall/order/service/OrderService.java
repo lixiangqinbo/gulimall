@@ -1,6 +1,7 @@
 package com.lxsx.gulimall.order.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.lxsx.gulimall.order.web.vo.PayAsyncVo;
 import com.lxsx.gulimall.utils.PageUtils;
 import com.lxsx.gulimall.order.entity.OrderEntity;
 
@@ -16,5 +17,11 @@ import java.util.Map;
 public interface OrderService extends IService<OrderEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    OrderEntity getByOrderSn(String orderSn);
+
+    PageUtils queryDetailPage(Map<String, Object> params);
+
+    Boolean orderPayedHanlder(PayAsyncVo payAsyncVo);
 }
 

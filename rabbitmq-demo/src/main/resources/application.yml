@@ -1,0 +1,17 @@
+server:
+  port: 30001
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    #broker收到消息后的简单回调开启
+    publisher-confirm-type: correlated
+    #开启息递交队列失败的回调
+    publisher-returns: true
+    #将消费方ACK机制 修改为手动签收
+    listener:
+      simple:
+        acknowledge-mode: manual
+    #只有开启了 mandatory 才能出发回调函数,无论消息吐送结果怎样都强制调用回调函数
+    template:
+      mandatory: true

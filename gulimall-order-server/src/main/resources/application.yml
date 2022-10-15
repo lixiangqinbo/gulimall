@@ -1,21 +1,92 @@
-#server:
-#  port: 8082
-#spring:
-#  application:
-#    name: gulimall-order
-#  datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://47.96.187.214:3306/gulimall_oms?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
-#    username: root
-#    password: qwe123
-#
-#mybatis-plus:
-#  type-aliases-package: com.lxsx.gulimall.product.entity
-#  mapper-locations: classpath:mapper/**/*.xml
-#  # 配置日志
-#  configuration:
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-#
-#  global-config:
-#    db-config:
-#      id-type: auto
+server:
+  port: 8082
+spring:
+  application:
+    name: gulimall-order
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.96.187.214:3306/gulimall_oms?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: qwe123
+  jackson:
+    date-format: YYYY-MM-DD HH:MM:SS
+  rabbitmq:
+    host: localhost
+    port: 5672
+    #broker收到消息后的简单回调开启
+    publisher-confirm-type: correlated
+    #开启息递交队列失败的回调
+    publisher-returns: true
+    #将消费方ACK机制 修改为手动签收
+    listener:
+      simple:
+        acknowledge-mode: manual
+    #只有开启了 mandatory 才能出发回调函数,无论消息吐送结果怎样都强制调用回调函数
+    template:
+      mandatory: true
+
+  redis:
+    host: localhost
+    port: 6379
+
+  thymeleaf:
+    suffix: .html
+    prefix: classpath:/templates/
+    cache: false
+    check-template-location: false
+  #SpringSession 全局缓存redis
+  session:
+    store-type: redis
+  cloud:
+    alibaba:
+      seata:
+        tx-service-group: gulimall_order_group
+mybatis-plus:
+  type-aliases-package: com.lxsx.gulimall.product.entity
+  mapper-locations: classpath:mapper/**/*.xml
+  # 配置日志
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+  global-config:
+    db-config:
+      id-type: auto
+
+#线程池配置
+gulimall:
+  thread:
+    core-size: 20
+    keep-alicve-time: 10
+    max-size: 200
+
+seata:
+  tx-service-group: gulimall_order_group  #对应seataServer.properties中的service.vgroupMapping.my_test_tx_group 集群分组
+  service:
+    vgroup-mapping:
+      gulimall_order_group: default
+  registry:
+    type: nacos   #注册中心类型：nacos
+    nacos:
+      application: seata-server      # seata-server注册在nacos中的服务名
+      server-addr: 162.14.77.50:8848   # nacos的地址端口
+      group : SEATA_GROUP            # seata-server在nacos的分组
+      namespace: 4345b4af-fd9f-4a57-836b-705c7ae10c70 # seata-server在nacos的命名空间ID
+      username: nacos                # nacos账号
+      password: nacos                # nacos密码
+  config:
+    type: nacos
+    nacos:
+      server-addr: 162.14.77.50:8848
+      group: SEATA_GROUP
+      namespace: 4345b4af-fd9f-4a57-836b-705c7ae10c70 # seata-server的配置文件的命名空间ID
+      dataId: seataServer.properties       # seata-server在nacos的配置dataId
+      username: nacos
+      password: nacos
+
+alipay:
+  app_id: 2021000121677277
+  notify_url: https://607252vu57.goho.co/order/pay/alipay/success
+  return_url: http://member.gulimall.com/memberOrder.html
+  sign_type: RSA2
+  alipay.charset: utf-8
+  gatewayUrl: https://openapi.alipaydev.com/gateway.do
